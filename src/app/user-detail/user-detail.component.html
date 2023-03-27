@@ -1,0 +1,61 @@
+<p>user-detail works!</p>
+
+<form [formGroup]="userFromGroup" novalidate>
+  <div class="form-group mb-3">
+    <label for="" class="center-block">
+      Name: <input type="text" class="form-control mt-2" formControlName="name">
+    </label>
+    <mat-error
+      *ngIf="userFromGroup.controls['name'].invalid && (userFromGroup.controls['name'].dirty || userFromGroup.controls['name'].touched)"
+      class="alert">
+      <div *ngIf="userFromGroup.controls['name'].errors?.['required']">
+        Please enter name
+      </div>
+      <div
+        *ngIf="!userFromGroup.controls['name'].errors?.['required'] && userFromGroup.controls['name'].errors?.['minlength']?.['actualLength'] < userFromGroup.controls['name'].errors?.['minlength']?.['requiredLength']">
+        Name must be greater than {{userFromGroup.controls['name'].errors?.['minlength']?.['requiredLength']}} words
+      </div>
+      {{userFromGroup.controls['name'].errors | json}}
+    </mat-error>
+  </div>
+  <div class="form-group mb-3">
+    <label for="" class="center-block">
+      Email: <input type="text" class="form-control mt-2" formControlName="email">
+    </label>
+  </div>
+  <div formGroupName="address" class="well well-lg mb-3">
+    <h4>User's address</h4>
+    <div class="form-group mb-3">
+      <label for="" class="center-block">
+        Street: <input class="form-control mt-2" formControlName="street">
+      </label>
+    </div>
+    <div class="form-group">
+      <select for="" class="center-block">
+        City: <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+      </select>
+    </div>
+  </div>
+  <p>Form values: {{userFromGroup.value|json}}</p>
+  <p>Form values: {{userFromGroup.status|json}}</p>
+  <p>Form values: {{userFromGroup.errors|json}}</p>
+  <button type="submit" class="btn btn-success" [disabled]="userFromGroup.status==='INVALID'">Create new user</button>
+  Name
+</form>
+
+<!-- <form [formGroup]="myForm" novalidate>
+  <div class="form-group">
+    <label class="center-block">Username:
+      <input class="form-control" formControlName="username">
+    </label>
+  </div>
+  <div
+    *ngIf="myForm.controls['username'].invalid && (myForm.controls['username'].dirty || myForm.controls['username'].touched)"
+    class="alert">
+    <div *ngIf="myForm.controls['username'].errors">
+      Please enter username
+    </div>
+  </div>
+</form>
+<p>Form value: {{ myForm.value | json }}</p>
+<p>Form status: {{ myForm.status | json }}</p> -->
